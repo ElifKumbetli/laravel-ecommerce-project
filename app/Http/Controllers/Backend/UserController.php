@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -14,7 +15,8 @@ class UserController extends Controller
     //dokümanda tek tırnak kullanımıtercih ediliyor(videoda bu şekilde idi).
     public function index()
     {
-        return view("backend.users.index");
+        $users=User::all();
+        return view('backend.users.index',["users" =>$users]);
     }
 
     /**
