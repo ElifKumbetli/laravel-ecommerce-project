@@ -16,6 +16,7 @@
     "dependencies": {
         "bootstrap": "^5.3.5",
         "bootstrap-icons": "^1.11.3",
+        "feather-icons": "^4.29.2",
         "jquery": "^3.7.1"
     }
 }

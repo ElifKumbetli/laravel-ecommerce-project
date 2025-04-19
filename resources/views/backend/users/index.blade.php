@@ -9,6 +9,10 @@
 
 
     <style>
+        .sidebar {
+        height: 100vh;
+      }
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -90,6 +94,7 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+      
     </style>
 
     <!-- Custom styles for this template -->
@@ -239,9 +244,10 @@
             </li>
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="/users">
-                <svg class="bi" aria-hidden="true"><use xlink:href="#file-earmark"/></svg>
+                <span data-feather="users"></span>
                 Kullanıcılar
-              </a>
+            </a>
+            
             </li>
         </ul>
                          
@@ -256,12 +262,13 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Yönetim Paneli</h1>
-       
+        <h1 class="h2">Kullanıcılar</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+              <a href="/users/create" class="btn btn-sm btn-outline-danger">Yeni Ekle</a>
+          </div>
       </div>
-
-
-      <h2>Kullanıcılar</h2>
+      </div>
       <div class="table-responsive small">
         <table class="table table-striped table-sm">
           <thead>
@@ -282,7 +289,31 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->is_active }}</td>
                 
-                <td>Güncelle-Sil-Şifre Değiştir</td>
+                
+                  <td>
+                    <ul class="nav float-start">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users">
+                                <span data-feather="edit"></span>
+                                Güncelle
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users">
+                                <span data-feather="trash-2"></span>
+                                Sil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users">
+                                <span data-feather="lock"></span>
+                                Şifre Değiştir
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+                
+                </td>
               </tr> 
             @endforeach
             
@@ -305,6 +336,8 @@
     </main>
   </div>
 </div>
-
+<script>
+  window.feather.replace()
+</script>
 </body>
 </html>
