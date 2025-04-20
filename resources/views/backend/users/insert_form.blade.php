@@ -269,70 +269,55 @@
           </div>
       </div>
       </div>
-      <div class="table-responsive small">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Sıra No</th>
-              <th scope="col">Ad Soyad</th>
-              <th scope="col">E-Posta</th>
-              <th scope="col">Durum</th>
-              <th scope="col">İşlemler</th>
-            </tr>
-          </thead>
-          <tbody>
-            @if (count($users)>0)
-            @foreach ($users as $user)
-            <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->is_active }}</td>
-                
-                
-                  <td>
-                    <ul class="nav float-start">
-                        <li class="nav-item">
-                            <a class="nav-link text-black" href="{{url("/users/$user->user_id/edit")}}">
-                                <span data-feather="edit"></span>
-                                Güncelle
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link list-item-delete text-black" href="{{url("/users/$user->user_id")}}" >
-                                <span data-feather="trash-2"></span>
-                                Sil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-black" href="/users">
-                                <span data-feather="lock"></span>
-                                Şifre Değiştir
-                            </a>
-                        </li>
-                    </ul>
-                </td>
-                
-                </td>
-              </tr> 
-            @endforeach
+      <h2>Yeni Kullanıcı Ekle</h2>
+  
+        <form action="xx" method="POST">
+          <div class="row">
+            <div class="col-lg-6">
             
-              @else
-              <tr>
-                <td colspan="5">
-                    
-                    <p class="text-center">Herhangi bir kullanıcı bulunamadı.</p>
-
-                </td>
-               
-              </tr> 
-            @endif
-         
+              <label for="name" class="form-label">Ad Soyad</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Ad soyad giriniz">
+            </div>
+            <div class="col-lg-6">
+              <label for="email" class="form-label">E posta giriniz</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="E-posta giriniz">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
             
+              <label for="password" class="form-label">Şifre Giriniz</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Şifre giriniz">
+            </div>
+            <div class="col-lg-6">
+              <label for="password2" class="form-label">Şifrenizi tekrar giriniz</label>
+              <input type="password" class="form-control" id="password2" name="password2" placeholder="Şifrenizi tekrar giriniz">
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-lg-6 mt-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="is_admin" name="is_admin">
+                <label class="form-check-label" for="is_admin">
+                  Yetkili Kullanıcı
+                </label>
+              </div>
+            </div>
             
-          </tbody>
-        </table>
-      </div>
+            <div class="col-lg-6">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" value="" id="is_active" name="is_active">
+                <label class="form-check-label" for="is_active">
+                  Aktif Kullanıcı
+                </label>
+              </div>
+            </div>
+          
+          </div>
+        </form>
+ 
+   
     </main>
   </div>
 </div>

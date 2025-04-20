@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return "create";
+        return view('backend.users.insert_form');
     }
 
     /**
