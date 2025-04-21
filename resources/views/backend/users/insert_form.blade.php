@@ -243,7 +243,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="/users">
+              <a class="nav-link d-flex align-items-center gap-2" href="{{url('/users')}}">
                 <span data-feather="users"></span>
                 Kullanıcılar
             </a>
@@ -253,8 +253,6 @@
                          
 
           </ul>
-
-
           
         </div>
       </div>
@@ -271,7 +269,8 @@
       </div>
       <h2>Yeni Kullanıcı Ekle</h2>
   
-        <form action="xx" method="POST">
+        <form action="{{url('/users')}}" method="POST">
+          @csrf
           <div class="row">
             <div class="col-lg-6">
             
@@ -298,7 +297,7 @@
           <div class="row">
             <div class="col-lg-6 mt-4">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="is_admin" name="is_admin">
+                <input class="form-check-input" type="checkbox" id="is_admin" name="is_admin">
                 <label class="form-check-label" for="is_admin">
                   Yetkili Kullanıcı
                 </label>
@@ -307,13 +306,18 @@
             
             <div class="col-lg-6">
               <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" value="" id="is_active" name="is_active">
+                <input class="form-check-input" type="checkbox" id="is_active" name="is_active">
                 <label class="form-check-label" for="is_active">
                   Aktif Kullanıcı
                 </label>
               </div>
             </div>
           
+            <div class="row">
+              <div class="col-12">
+                <button type="submit" class="btn btn-success mt-2">Kaydet</button>
+              </div>
+            </div>
           </div>
         </form>
  
