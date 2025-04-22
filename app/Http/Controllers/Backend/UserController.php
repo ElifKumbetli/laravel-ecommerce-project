@@ -41,11 +41,6 @@ class UserController extends Controller
 
         //dd($name,$email,$password,$is_admin,$is_active);
 
-        $is_admin = $is_admin == "on" ? 1 : 0;
-        $is_active = $is_active == "on" ? 1 : 0;
-        
-
-
         $user = new User();         // Yeni kullanıcı oluştur
         $user->name = $name;        // Adını ekle
         $user->email = $email;      // Email ekle
@@ -70,16 +65,31 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        return "edit";
+        $user=User::find($id);//v.tabanından kullancıyı buluyor,varsa $user değ.atıyor.
+        return view('backend.users.update_form',["user" => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        return "update";
+        $name = $request->get("name");
+        $email = $request->get("email");
+        $is_admin = $request->get("is_admin", 0);
+        $is_active = $request->get("is_active", 0);
+    
+        $user = User::find($id);
+        $user->name = $name;
+        $user->email = $email;
+        $user->is_admin = $is_admin;
+        $user->is_active = $is_active;
+    
+        $user->save();
+     
+        return redirect('/users');
     }
+    
 
     /**
      * Remove the specified resource from storage.
