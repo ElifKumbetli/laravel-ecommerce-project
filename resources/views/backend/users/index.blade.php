@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <title>Dashboard Users Page</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
@@ -283,7 +285,7 @@
           <tbody>
             @if (count($users)>0)
             @foreach ($users as $user)
-            <tr>
+            <tr id="$user->user_id">
                 <td>{{$loop->iteration}}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
@@ -308,8 +310,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link list-item-delete text-black" href="{{url("/users/$user->user_id")}}" >
-                                <span data-feather="trash-2"></span>
-                                Sil
+                              <span data-feather="trash-2"></span>
+                              Sil
                             </a>
                         </li>
                         <li class="nav-item">
@@ -344,8 +346,6 @@
     </main>
   </div>
 </div>
-<script>
-  window.feather.replace()
-</script>
+
 </body>
 </html>
