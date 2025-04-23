@@ -275,22 +275,45 @@
             <div class="col-lg-6">
             
               <label for="name" class="form-label">Ad Soyad</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Ad soyad giriniz">
+              <input type="text" class="form-control" id="name" name="name" 
+              value="{{old("name")}}"
+              placeholder="Ad soyad giriniz">
+              @error("name")
+              <span class="text-danger">{{$message}}</span>   
+                          
+               @enderror
             </div>
             <div class="col-lg-6">
               <label for="email" class="form-label">E posta giriniz</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="E-posta giriniz">
+              <input type="email" class="form-control" id="email" name="email" 
+              value="{{old("email")}}"
+              placeholder="E-posta giriniz">
+              @error("email")
+              <span class="text-danger">{{$message}}</span>   
+                          
+               @enderror
             </div>
           </div>
           <div class="row">
             <div class="col-lg-6">
             
               <label for="password" class="form-label">Şifre Giriniz</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Şifre giriniz">
+              <input type="password" class="form-control" id="password" name="password" 
+              placeholder="Şifre giriniz">  
+              @error("password")
+                <span class="text-danger">{{$message}}</span>   
+                            
+                @enderror
+             
             </div>
             <div class="col-lg-6">
-              <label for="password2" class="form-label">Şifrenizi tekrar giriniz</label>
-              <input type="password" class="form-control" id="password2" name="password2" placeholder="Şifrenizi tekrar giriniz">
+              <label for="password_confirmation" class="form-label">Şifrenizi tekrar giriniz</label>
+              <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Şifrenizi tekrar giriniz"
+              autocomplete="new-password">
+              @error("password")
+                <span class="text-danger">{{$message}}</span>   
+                            
+                @enderror
             </div>
           </div>
           

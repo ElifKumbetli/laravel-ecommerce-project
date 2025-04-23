@@ -269,20 +269,28 @@
       </div>
       <h2>Kullanıcı Düzenle</h2>
   
-      <form action="{{ url('/users/' . $user->user_id) }}" method="POST" autocomplete="off">
+      <form action="{{ url('/users/' . $user->user_id) }}" method="POST" autocomplete="off" novalidate>
         @csrf
         @method('PUT')
-    
+        <input type="hidden" name="user_id" value="{{ $user->user_id }}">
     
           <div class="row">
             <div class="col-lg-6">
             
               <label for="name" class="form-label">Ad Soyad</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Ad soyad giriniz" value="{{$user->name}}">
+              <input type="text" class="form-control" id="name" name="name" placeholder="Ad soyad giriniz" value="{{old("name",$user->name)}}">
+              @error("name")
+              <span class="text-danger">{{$message}}</span>   
+                          
+               @enderror
             </div>
             <div class="col-lg-6">
               <label for="email" class="form-label">E posta giriniz</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="E-posta giriniz" value="{{$user->email}}">
+              <input type="email" class="form-control" id="email" name="email" placeholder="E-posta giriniz" value="{{old("email", $user->email)}}">
+              @error("email")
+              <span class="text-danger">{{$message}}</span>   
+                          
+               @enderror
             </div>
           </div>
                 
