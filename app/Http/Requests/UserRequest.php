@@ -24,8 +24,8 @@ class UserRequest extends FormRequest
     {
         $user_id = $this->request->get("user_id");
         return [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email,' . $this->user_id . ',user_id',
+            'name' => 'required|sometimes|min:3',
+            'email' => 'required|sometimes|email|unique:users,email,' . $this->user_id . ',user_id',
             'password' => 'required|sometimes|string|min:5|confirmed'
         ];
     }

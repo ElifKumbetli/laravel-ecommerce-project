@@ -7,6 +7,8 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -45,7 +47,7 @@ class UserController extends Controller
         $user = new User();         // Yeni kullanıcı oluştur
         $user->name = $name;        // Adını ekle
         $user->email = $email;      // Email ekle
-        $user->password = $password; // Şifreyi güvenli şekilde ekle
+        $user->password = Hash::make($password); // Şifreyi güvenli şekilde ekle
         $user->is_admin = $is_admin; 
         $user->is_active = $is_active;
 
@@ -101,5 +103,18 @@ class UserController extends Controller
         $user->delete();
         //return redirect('/users');
         return response()->json(["message" => "Done", "id" =>$id]);
+    }
+
+    public function passwordForm(User $user)
+    {
+        return view('backend.users.password_form', ['user' => $user]);
+    }
+
+    public function changePassword(User $user, Request $request)
+    {
+        $password=$request->get("password");
+        $user->password =Hash::make($password);
+        $user->save();
+        return Redirect::to("/users");
     }
 }
