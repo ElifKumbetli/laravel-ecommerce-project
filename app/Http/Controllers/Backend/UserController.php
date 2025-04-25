@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    
+   public function __construct()
+   {
+     $this->returnUrl = "/users";
+   } 
+ 
+
     /**
      * Display a listing of the resource.
      
@@ -52,37 +59,33 @@ class UserController extends Controller
         $user->is_active = $is_active;
 
         $user->save();              // Veritabanına kaydet
-        return Redirect::to("/users");
+        return Redirect::to($this->returnUrl);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        return "show =>$id";
-    }
+  
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        $user=User::find($id);//v.tabanından kullancıyı buluyor,varsa $user değ.atıyor.
         return view('backend.users.update_form',["user" => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request,User $user)
     {
         $name = $request->get("name");
         $email = $request->get("email");
         $is_admin = $request->get("is_admin", 0);
         $is_active = $request->get("is_active", 0);
     
-        $user = User::find($id);
+       
         $user->name = $name;
         $user->email = $email;
         $user->is_admin = $is_admin;
@@ -90,19 +93,19 @@ class UserController extends Controller
     
         $user->save();
      
-        return redirect('/users');
+        return redirect($this->returnUrl);
     }
     
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
+ 
         $user->delete();
         //return redirect('/users');
-        return response()->json(["message" => "Done", "id" =>$id]);
+        return response()->json(["message" => "Done", "id" =>$user->user_id]);
     }
 
     public function passwordForm(User $user)
@@ -115,6 +118,6 @@ class UserController extends Controller
         $password=$request->get("password");
         $user->password =Hash::make($password);
         $user->save();
-        return Redirect::to("/users");
+        return Redirect::to($this->returnUrl);
     }
 }
