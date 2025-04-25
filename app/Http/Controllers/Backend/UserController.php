@@ -42,22 +42,10 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(UserRequest $request)
-    {
-        $name=$request->get("name");
-        $email=$request->get("email");
-        $password=$request->get("password");
-        $is_admin = $request->get('is_admin', 0);
-        $is_active = $request->get('is_active', 0);
-
-        //dd($name,$email,$password,$is_admin,$is_active);
-
+    {        
         $user = new User();         // Yeni kullanıcı oluştur
-        $user->name = $name;        // Adını ekle
-        $user->email = $email;      // Email ekle
-        $user->password = Hash::make($password); // Şifreyi güvenli şekilde ekle
-        $user->is_admin = $is_admin; 
-        $user->is_active = $is_active;
-
+        $data = $this->prepare($request, $user->getFillable());
+        $user->fill($data);
         $user->save();              // Veritabanına kaydet
         return Redirect::to($this->returnUrl);
     }
@@ -79,17 +67,8 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UserRequest $request,User $user)
-    {
-        $name = $request->get("name");
-        $email = $request->get("email");
-        $is_admin = $request->get("is_admin", 0);
-        $is_active = $request->get("is_active", 0);
-    
-       
-        $user->name = $name;
-        $user->email = $email;
-        $user->is_admin = $is_admin;
-        $user->is_active = $is_active;
+    {   $data = $this->prepare($request, $user->getFillable());
+        $user->fill($data);
     
         $user->save();
      
@@ -115,8 +94,8 @@ class UserController extends Controller
 
     public function changePassword(User $user, Request $request)
     {
-        $password=$request->get("password");
-        $user->password =Hash::make($password);
+        $data = $this->prepare($request, $user->getFillable());
+        $user->fill($data);
         $user->save();
         return Redirect::to($this->returnUrl);
     }

@@ -14,10 +14,22 @@ class Controller extends BaseController
     public $returnUrl;
     public $fileRepo;
 
-    public function prepare($request, $fillable): array
+    /**
+     * İstekten gelen verileri, modelin $fillable alanlarına göre hazırlar
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param array $fillables
+     * @return array
+     */
+    
+    public function prepare($request, $fillables): array
     {
-        $this->returnUrl = url()->previous();
-        $this->fileRepo = $fillable;
-        return $request->only($fillable);
+        $data = array();
+        foreach ($fillables as $fillable) {
+            if ($request->has($fillable)) {
+                $data[$fillable] = $request->get($fillable);
+            }
+        }
+        return $data;
     }
 }
