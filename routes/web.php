@@ -4,8 +4,9 @@ use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/users');
 });
+
 
 
 Route::resource('users', UserController::class);
