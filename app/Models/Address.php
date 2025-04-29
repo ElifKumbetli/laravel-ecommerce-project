@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Adress extends Model
+class Address extends Model
 {
-    /** @use HasFactory<\Database\Factories\AdressFactory> */
+    /** @use HasFactory<\Database\Factories\AddressFactory> */
     use HasFactory, SoftDeletes;
 
 
-    protected $primarykey = "address_id";
+    protected $primaryKey  = "address_id";
 
     protected $fillable = [
         "address_id",

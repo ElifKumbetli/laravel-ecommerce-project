@@ -49,4 +49,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function addrs()
+    {
+        return $this->hasMany(Address::class, foreignKey: "", localKey: "user_id");
+    }
 }

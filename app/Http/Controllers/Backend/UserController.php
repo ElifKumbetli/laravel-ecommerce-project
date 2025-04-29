@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    
-   public function __construct()
-   {
-     $this->returnUrl = "/users";
-   } 
- 
+
+    public function __construct()
+    {
+        $this->returnUrl = "/users";
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -26,8 +26,8 @@ class UserController extends Controller
     //dokümanda tek tırnak kullanımıtercih ediliyor(videoda bu şekilde idi).
     public function index()
     {
-        $users=User::all();
-        return view('backend.users.index',["users" =>$users]);
+        $users = User::all();
+        return view('backend.users.index', ["users" => $users]);
     }
 
     /**
@@ -42,7 +42,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(UserRequest $request)
-    {        
+    {
         $user = new User();         // Yeni kullanıcı oluştur
         $data = $this->prepare($request, $user->getFillable());
         $user->fill($data);
@@ -53,38 +53,39 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-  
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
     {
-        return view('backend.users.update_form',["user" => $user]);
+        return view('backend.users.update_form', ["user" => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request,User $user)
-    {   $data = $this->prepare($request, $user->getFillable());
+    public function update(UserRequest $request, User $user)
+    {
+        $data = $this->prepare($request, $user->getFillable());
         $user->fill($data);
-    
+
         $user->save();
-     
+
         return redirect($this->returnUrl);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(User $user)
     {
- 
+
         $user->delete();
         //return redirect('/users');
-        return response()->json(["message" => "Done", "id" =>$user->user_id]);
+        return response()->json(["message" => "Done", "id" => $user->user_id]);
     }
 
     public function passwordForm(User $user)

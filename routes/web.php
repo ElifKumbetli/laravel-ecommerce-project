@@ -17,4 +17,4 @@ Route::resource('users', UserController::class);
 Route::get('/users/{user}/change-password', [UserController::class, 'passwordForm'])->name('users.change-password.form');
 Route::post('/users/{user}/change-password', [UserController::class, 'changePassword'])->name('users.change-password');
 
-Route::resource('/users/{user}/adresses', AddressController::class);
+Route::resource('/users/{user}/addresses', AddressController::class);
