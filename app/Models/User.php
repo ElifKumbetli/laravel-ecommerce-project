@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function addrs()
     {
-        return $this->hasMany(Address::class, foreignKey: "", localKey: "user_id");
+        return $this->hasMany(Address::class, 'user_id', 'user_id');
     }
 }

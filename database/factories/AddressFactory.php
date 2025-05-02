@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Adress>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
  */
-class AdressFactory extends Factory
+class AddressFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class AdressFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 3,
+            'user_id' => 2,
             'city' => $this->faker->city,
             'district' => $this->faker->city,
             'zipcode' => fake()->randomDigitNotZero(),

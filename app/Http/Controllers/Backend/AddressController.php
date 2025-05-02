@@ -20,13 +20,14 @@ class AddressController extends Controller
     {
         $this->returnUrl = "/users/{}/address";
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(User $user): View
     {
         $addrs = $user->addrs;
-        return view("backend.adressess.index", ["addrs" => $addrs]);
+        return view('backend.addresses.index', ["addrs" => $addrs, "user" => $user]);
     }
 
     /**
@@ -34,7 +35,7 @@ class AddressController extends Controller
      */
     public function create(User $user): View
     {
-        return view('backend.adressess.insert_form', ["user" => $user]);
+        return view('backend.addresses.insert_form', ["user" => $user]);
     }
 
     /**
@@ -46,19 +47,19 @@ class AddressController extends Controller
         $addr = new Address();
         $data = $this->prepare($request, $addr->getFillable());
         $addr->fill($data);
-        $user->save();              // Veritabanına kaydet
+        $addr->save();
 
         $this->editReturnUrl($user->user_id);
-
         return Redirect::to($this->returnUrl);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user, Address $address): View
     {
-        return view('backend.address.update_form', ["user" => $user, "addr" => "$address"]);
+        return view('backend.addresses.update_form', ["user" => $user, "addr" => $address]);
     }
 
     /**
@@ -88,6 +89,6 @@ class AddressController extends Controller
 
     private function editReturnUrl($id)
     {
-        $this->returnUrl = "/users/$id/address";
+        $this->returnUrl = "/users/$id/addresses";
     }
 }

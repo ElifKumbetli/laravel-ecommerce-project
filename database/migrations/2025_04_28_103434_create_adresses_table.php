@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id("address_id");
-            $table->foreignIdFor(User::class, "user_id");
+            $table->foreignId('user_id')->constrained(); // Bu, user_id için bir foreign key oluşturur ve varsayılan olarak users tablosuna referans verir.
             $table->string("city");
             $table->string("district");
             $table->string("zipcode");

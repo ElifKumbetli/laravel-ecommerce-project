@@ -23,11 +23,11 @@ class AddressRequest extends FormRequest
     {
         return [
 
-            'user_id' => 'required|numeric',
-            'city' => 'required|min:3',
-            'district' => 'required|min:3,',
-            'zipcode' => 'required|min:3,',
-            'address' => 'required|min:30,'
+            'user_id' => 'required|numeric', // Kullanıcı kimliği
+            'city' => 'required|min:3', // Şehir, en az 3 karakter
+            'district' => 'required|min:3', // İlçe, en az 3 karakter
+            'zipcode' => 'required|min:3', // Posta kodu, en az 3 karakter
+            'address' => 'required|min:10', // Adres, en az 10 karakter
 
         ];
     }
@@ -43,7 +43,7 @@ class AddressRequest extends FormRequest
             'zipcode.required' => 'Bu alan zorunludur.',
             'zipcode.min' => 'En az 3 karakterden oluşmalıdır',
             'address.required' => 'Bu alan zorunludur.',
-            'address.min' => 'En az 30 karakterden oluşmalıdır',
+            'address.min' => 'En az 10 karakterden oluşmalıdır',
         ];
     }
 }
