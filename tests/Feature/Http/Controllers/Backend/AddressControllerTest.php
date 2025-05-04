@@ -52,8 +52,16 @@ class AddressControllerTest extends TestCase
 
     public function test_new_resource_is_created()
     {
-        $adr = Address::factory()->make();
-        $data = $adr->toArray();
+
+        $data = [
+            "user_id" => 2,
+            "city" => "Çanakkale",
+            "district" => "Lapseki",
+            "zipcode" => "17888",
+            "address" => "Açık adres alanıdır",
+            "is_default" => false,
+        ];
+
         $response = $this->post('/users/2/addresses', $data);
         $response->assertRedirect('/users/2/addresses');
     }

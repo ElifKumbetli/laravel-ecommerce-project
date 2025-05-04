@@ -80,7 +80,7 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Address $address): JsonResponse
+    public function destroy(User $user, Address $address): JsonResponse
     {
 
         $address->delete();
