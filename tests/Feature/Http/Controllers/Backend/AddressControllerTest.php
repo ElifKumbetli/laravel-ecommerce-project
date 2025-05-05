@@ -52,6 +52,14 @@ class AddressControllerTest extends TestCase
 
     public function test_new_resource_is_created()
     {
+        $user = User::create([
+            'user_id' => 2,
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $this->actingAs($user);
 
         $data = [
             "user_id" => 2,
@@ -62,21 +70,43 @@ class AddressControllerTest extends TestCase
             "is_default" => false,
         ];
 
-        $response = $this->post('/users/2/addresses', $data);
-        $response->assertRedirect('/users/2/addresses');
+        $response = $this->post("/users/2/addresses", $data);
+        $response->assertRedirect("/users/2/addresses");
     }
+
+
 
     public function test_existing_resource_is_updated()
     {
-        $entity = Address::all()->last();
+        // 1. Önce user oluştur
+        $user = User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
 
-        $entity->city = "CITY " . $entity->city;
-        $entity->district = "DISTRICT " . $entity->district;
+        // 2. Kullanıcıya bir adres oluştur
+        $address = Address::create([
+            'user_id' => $user->getKey(), // user_id olacak
+            'city' => 'İstanbul',
+            'district' => 'Kadıköy',
+            'zipcode' => '34000',
+            'address' => 'Test adresi',
+            'is_default' => false,
+        ]);
 
-        $data = $entity->toArray();
+        // 3. Değişiklik yap
+        $address->city = 'CITY ' . $address->city;
+        $address->district = 'DISTRICT ' . $address->district;
 
-        $response = $this->put('/users/2/addresses/' . $entity->address_id, $data);
+        $data = $address->toArray();
 
-        $response->assertRedirect('/users/2/addresses');
+        $this->actingAs($user); // Oturum açmayı unutma
+
+        // 4. PUT isteği gönder
+        $response = $this->put('/users/' . $user->getKey() . '/addresses/' . $address->address_id, $data);
+
+        // 5. Beklenen yönlendirmeyi kontrol et
+        $response->assertRedirect('/users/' . $user->getKey() . '/addresses');
     }
 }
