@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $products = Product::all()->where('is_active', true);
+        $products = Product::all();
         return view("backend.products.index", ["products" => $products]);
     }
 
