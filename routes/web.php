@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AddressController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,3 +21,4 @@ Route::resource('/users/{user}/addresses', AddressController::class);
 
 Route::resource("/categories", CategoryController::class);
 Route::resource("/products", ProductController::class);
+Route::resource("/products/{product}/images", ProductImageController::class);
