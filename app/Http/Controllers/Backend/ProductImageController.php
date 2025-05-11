@@ -17,7 +17,7 @@ class ProductImageController extends Controller
     public function __construct()
     {
         $this->returnUrl = "/products/{}/images";
-        $this->fileRepo = "public/products";
+        $this->fileRepo = 'products';
     }
 
 
@@ -50,6 +50,8 @@ class ProductImageController extends Controller
      */
     public function store(ProductImageRequest $request, Product $product): RedirectResponse
     {
+        //dd($request->allFiles());
+
         $productImage = new ProductImage();
         $data = $this->prepare($request, $productImage->getFillable());
         $productImage->fill($data);
@@ -114,4 +116,6 @@ class ProductImageController extends Controller
 
         return response()->json(["message" => "Done", "id" => $image->image_id]);
     }
+
+    //response: cevap
 }
