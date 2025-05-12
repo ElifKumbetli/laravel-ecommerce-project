@@ -5,11 +5,10 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return 'Hello World';
-});
+Route::get('/', [HomeController::class, 'index']);
 
 
 Route::resource('users', UserController::class);
