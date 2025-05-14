@@ -165,8 +165,10 @@
                                     <h5 class="card-title">{{ $product->name }}</h5>
                                     <h6 class="card-title">Fiyat: {{ $product->price }}TL</h6>
                                     <p class="card-text">{{ $product->lead }}</p>
-                                    <a href="/sepetim/ekle/{{ $product->product_id }}" class="btn btn-primary">Sepete
-                                        Ekle</a>
+                                    <a href="{{ url('/sepete-ekle/' . $product->product_id) }}"
+                                        class="btn btn-primary">Sepete Ekle</a>
+
+
                                 </div>
                             </div>
                         @endforeach

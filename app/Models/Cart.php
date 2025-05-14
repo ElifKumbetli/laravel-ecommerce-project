@@ -18,4 +18,8 @@ class Cart extends Model
         'code',
         'is_active'
     ];
+    public function details()
+    {
+        return $this->hasMany(CartDetails::class, "cart_id", "cart_id");
+    }
 }

@@ -1,6 +1,7 @@
-import axios from 'axios';
-import $ from 'jquery';
-import feather from 'feather-icons';
+import axios from "axios";
+import $ from "jquery";
+import feather from "feather-icons";
+import "bootstrap";
 
 window.$ = $;
 window.jQuery = $;
@@ -10,13 +11,13 @@ window.feather = feather;
 // Laravel'de CSRF token ekleme
 const token = document.head.querySelector('meta[name="csrf-token"]');
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
 } else {
-    console.error('CSRF token not found!');
+    console.error("CSRF token not found!");
 }
 
-import './panel-list-item-delete';
+import "./panel-list-item-delete";
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
     feather.replace();
 });
