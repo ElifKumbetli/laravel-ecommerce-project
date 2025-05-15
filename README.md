@@ -57,7 +57,7 @@ Proje arayüzünden bazı örnek ekranlar:
     ![Adres Ekle](screenshots/kullanici-adres-modulu-adres-ekle.png)
 
 -   **Kullanıcı Modülü - Şifre Değiştirme**  
-    ![Şifre Değiştir](screenshots/kullanici-modulu-sifre-degistirme-ekrani.png)
+    ![Şifre Değiştir](screenshots/kullanici-modulu-sifre-degistirme-ekrani.PNG)
 
 -   **Kullanıcı Modülü**  
     ![Kullanıcı Modülü](screenshots/kullanici-modulu.png)
@@ -66,7 +66,7 @@ Proje arayüzünden bazı örnek ekranlar:
     ![Satın Al](screenshots/satin-al.png)
 
 -   **Sepetim**  
-    ![Sepetim](screenshots/sepetim.png)
+    ![Sepetim](screenshots/sepet.png)
 
 -   **Ürün Ekleme Ekranı**  
     ![Ürün Ekleme](screenshots/urun-ekleme-ekrani.png)
