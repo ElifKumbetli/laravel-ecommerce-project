@@ -47,3 +47,7 @@ Route::group(["middleware" => "auth"], function () {
     Route::resource("/products", ProductController::class);
     Route::resource("/products/{product}/images", ProductImageController::class);
 });
+
+Route::get('/test-contribution', function () {
+    return 'Contribution test başarılı!';
+});
