@@ -63,13 +63,13 @@ Proje arayüzünden bazı örnek ekranlar:
     ![Kullanıcı Modülü](screenshots/kullanici-modulu.png)
 
 -   **Satın Alma Sayfası**  
-    ![Satın Al](screenshots/satin-al.png)
+    ![Satın Al](screenshots/satin-al.PNG)
 
 -   **Sepetim**  
-    ![Sepetim](screenshots/sepet.png)
+    ![Sepetim](screenshots/sepet.PNG)
 
 -   **Ürün Ekleme Ekranı**  
-    ![Ürün Ekleme](screenshots/urun-ekleme-ekrani.png)
+    ![Ürün Ekleme](screenshots/urun-ekleme-ekrani.PNG)
 
 -   **Ürün Modülü**  
     ![Ürün Modülü](screenshots/urun-modulu.png)
