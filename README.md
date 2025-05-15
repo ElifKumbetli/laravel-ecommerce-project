@@ -78,7 +78,7 @@ Proje arayüzünden bazı örnek ekranlar:
     ![Fotoğraf Ekle](screenshots/urun-modulu-fotograf-ekleme-kismi.png)
 
 -   **Üye Ol Ekranı**  
-    ![Üye Ol](screenshots/uye-ol-ekrani.png)
+    ![Üye Ol](screenshots/uye-ol-ekrani.PNG)
 
 ## 🧩 Proje Yapısı
 
