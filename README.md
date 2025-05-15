@@ -69,7 +69,7 @@ Proje arayüzünden bazı örnek ekranlar:
     ![Sepetim](screenshots/sepet.PNG)
 
 -   **Ürün Ekleme Ekranı**  
-    ![Ürün Ekleme](screenshots/urun-ekleme-ekrani.PNG)
+    ![Ürün Ekleme](screenshots/urun-ekleme-ekranı.png)
 
 -   **Ürün Modülü**  
     ![Ürün Modülü](screenshots/urun-modulu.png)
