@@ -12,6 +12,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/kategori/{category:slug}', [\App\Http\Controllers\Frontend\CategoryController::class, 'index']);
 
