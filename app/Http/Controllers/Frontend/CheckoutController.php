@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Helpers\IyzicoAddressHelper;
+use App\Helpers\IyzicoBuyerHelper;
+use App\Helpers\IyzicoOptionsHelper;
+use App\Helpers\IyzicoPaymentCardHelper;
+use App\Helpers\IyzicoRequestHelper;
 use App\Models\Cart;
 use App\Models\CreditCard;
 use App\Models\Invoice;
@@ -26,11 +30,9 @@ class CheckoutController extends Controller
 
     public function checkout(Request $request): View
     {
-        $name = $request->get("name");
-        $card_no = $request->get("card_no");
-        $expire_month = $request->get("expire_month");
-        $expire_year = $request->get("expire_year");
-        $cvc = $request->get("cvc");
+        $creditCard = new CreditCard();
+        $data = $this->prepare($request, $creditCard->getFillable());
+        $creditCard->fill($data);
 
 
         // Kullanıcıyı al
@@ -44,71 +46,31 @@ class CheckoutController extends Controller
 
 
         //Ödeme isteği oluştur
-        $request = new \Iyzipay\Request\CreatePaymentRequest();
-        $request->setLocale(\Iyzipay\Model\Locale::TR);
-        $request->setConversationId($cart->code);
-        $request->setPrice($total);
-        $request->setPaidPrice($total);
-        $request->setCurrency(\Iyzipay\Model\Currency::TL);
-        $request->setInstallment(1); //taksit
-        $request->setBasketId($cart->code);
-        $request->setPaymentChannel(\Iyzipay\Model\PaymentChannel::WEB);
-        $request->setPaymentGroup(\Iyzipay\Model\PaymentGroup::PRODUCT);
+        $request = IyzicoRequestHelper::createRequest($cart, $total);
 
-        //Payment nesnesi oluştur
-        $paymentCard = new \Iyzipay\Model\PaymentCard();
-        $paymentCard->setCardHolderName($name);
-        $paymentCard->setCardNumber($card_no);
-        $paymentCard->setExpireMonth($expire_month);
-        $paymentCard->setExpireYear($expire_year);
-        $paymentCard->setCvc($cvc);
-        $paymentCard->setRegisterCard(0);
+        // PaymentCard Nesnesini oluştur.
+        $paymentCard = IyzicoPaymentCardHelper::getPaymentCard($creditCard);
         $request->setPaymentCard($paymentCard);
 
-        //Buyer nesnesi oluştur. Buyer->Satın alan
-        $buyer = new \Iyzipay\Model\Buyer();
-        $buyer->setId($user->user_id);
-        $buyer->setName($user->name);
-        $buyer->setSurname("Doe");
-        $buyer->setGsmNumber("+905350000000");
-        $buyer->setEmail($user->email);
-        $buyer->setIdentityNumber("74300864791");
-        $buyer->setLastLoginDate("2015-10-05 12:43:35");
-        $buyer->setRegistrationDate("2013-04-21 15:12:09");
-        $buyer->setRegistrationAddress("Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1");
-        $buyer->setIp(\request()->ip());
-        $buyer->setCity("Istanbul");
-        $buyer->setCountry("Turkey");
-        $buyer->setZipCode("34732");
+        // Buyer nesnesini oluştur
+        $buyer = IyzicoBuyerHelper::getBuyer();
         $request->setBuyer($buyer);
 
         // Kargo adresi nesnelerini oluştur.
-        $shippingAddress = new \Iyzipay\Model\Address();
-        $shippingAddress->setContactName("Jane Doe");
-        $shippingAddress->setCity("Istanbul");
-        $shippingAddress->setCountry("Turkey");
-        $shippingAddress->setAddress("Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1");
-        $shippingAddress->setZipCode("34742");
+        $shippingAddress = IyzicoAddressHelper::getAddress();
         $request->setShippingAddress($shippingAddress);
 
         // Fatura adresi nesnelerini oluştur.
-        $billingAddress = new \Iyzipay\Model\Address();
-        $billingAddress->setContactName("Jane Doe");
-        $billingAddress->setCity("Istanbul");
-        $billingAddress->setCountry("Turkey");
-        $billingAddress->setAddress("Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1");
-        $billingAddress->setZipCode("34742");
+        $billingAddress = IyzicoAddressHelper::getAddress();
         $request->setBillingAddress($billingAddress);
 
         // Sepetteki ürünleri (CartDetails) BasketItem listesi olarak hazırla
         $basketItems = $this->getBasketItems();
         $request->setBasketItems($basketItems);
 
-        //Option nesnesi oluştur
-        $options = new \Iyzipay\Options();
-        $options->setApiKey(env("IYZICO_API_KEY"));
-        $options->setSecretKey(env("IYZICO_SECRET_KEY"));
-        $options->setBaseUrl(env("IYZICO_BASE_URL"));
+
+        //Options Nesnesi Oluştur
+        $options = IyzicoOptionsHelper::getTestOptions();
 
         // Ödeme yap
         $payment = Payment::create($request, $options);
@@ -131,7 +93,6 @@ class CheckoutController extends Controller
             return view("frontend.checkout.error", ["message" => $errorMessage]);
         }
     }
-
 
     private function calculateCartTotal(): float
     {
@@ -175,5 +136,48 @@ class CheckoutController extends Controller
         }
 
         return $basketItems;
+    }
+    private function finalizeCart(Cart $cart)
+    {
+        $cart->is_active = false;
+        $cart->save();
+    }
+
+    private function createOrderWithDetails(Cart $cart): Order
+    {
+        $order = new Order([
+            "cart_id" => $cart->cart_id,
+            "code" => $cart->code
+        ]);
+        $order->save();
+
+        foreach ($cart->details as $detail) {
+            $order->details()->create([
+                'order_id' => $order->order_id,
+                'product_id' => $detail->product_id,
+                'quantity' => $detail->quantity
+            ]);
+        }
+
+        return $order;
+    }
+
+    private function createInvoiceWithDetails(Order $order)
+    {
+        $invoice = new Invoice([
+            "cart_id" => $order->order_id,
+            "code" => $order->code
+        ]);
+
+        //Fatura Detaylarını Ekle
+        foreach ($order->details as $detail) {
+            $invoice->details()->create([
+                'invoice_id' => $invoice->invoice_id,
+                'product_id' => $detail->product_id,
+                'quantity' => $detail->quantity,
+                'unit_price' => $detail->product->price,
+                'total' => ($detail->quantity * $detail->product->price),
+            ]);
+        }
     }
 }
