@@ -34,8 +34,6 @@ Route::group(["middleware" => "auth"], function () {
     Route::post("/satin-al", [CheckoutController::class, 'checkout']);
 });
 
-
-
 Route::group(["middleware" => "auth"], function () {
 
     Route::resource('users', UserController::class);
