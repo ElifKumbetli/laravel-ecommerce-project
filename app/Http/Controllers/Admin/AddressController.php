@@ -53,7 +53,6 @@ class AddressController extends Controller
         return Redirect::to($this->returnUrl);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
